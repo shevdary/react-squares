@@ -4,14 +4,12 @@
   border: 1px solid #48aae6;
   margin: 60px;
 }
-
-td {
+.squares-table td {
   width: 50px;
   background-color: #48aae6;
   height: 50px;
 }
-
-button {
+.squares-table button {
   outline: none;
   margin: 2px;
   color: #ffffff;
@@ -20,34 +18,44 @@ button {
   font-size: 25px;
   position: absolute;
   border: none;
+  transition: 0.25s;
 }
-
-button:hover {
+.squares-table button:hover {
   transition: opacity 0.5s;
   opacity: 65%;
 }
-
-.button-rm, .button-rm {
+.squares-table .button-rm,
+.squares-table .button-rm {
+  visibility: hidden;
   background-color: #b20000;
 }
-
-.button-add, .button-row {
+.squares-table .button-add,
+.squares-table .button-row {
   background-color: #f3a500;
 }
-
-.add-coll {
+.squares-table .add-coll {
   left: 100%;
   top: 0;
 }
-
-.remove-coll {
+.squares-table .remove-coll {
   bottom: 100%;
   left: 0;
 }
-
-.remove-row {
+.squares-table .remove-row {
   right: 100%;
   top: 0;
+}
+.squares-table .visible {
+  visibility: visible;
+}
+.squares-table .hidden {
+  visibility: hidden;
+}
+.squares-table .block {
+  display: block;
+}
+.squares-table .none {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
