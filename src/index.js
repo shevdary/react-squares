@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import "./index.scss";
-import {DrawTable} from "./components/drawTable";
+import DrawTable from "./components/drawTable";
 
-class App extends Component {
+export default class App extends Component {
     render() {
         return (
             <div>
-                <DrawTable initialWidth="4"  initialHeight="4" cellSizse={50}  />
+                <DrawTable initialWidth="4"  initialHeight="4" cellSize={50}/>
             </div>
         );
     }
 }
-export default App;
+
 
 ReactDOM.render(<App />, document.getElementById("root"));
