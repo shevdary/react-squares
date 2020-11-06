@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack ",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -27,13 +29,21 @@
     "@babel/plugin-transform-template-literals": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "babel-jest": "^26.6.3",
     "babel-loader": "^8.1.0",
     "bable-loader": "0.0.1-security",
     "css-loader": "^5.0.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "enzyme-to-json": "^3.6.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
     "mini-css-extract-plugin": "^1.2.1",
     "node-sass": "^5.0.0",
+    "react-addons-test-utils": "^15.6.2",
+    "react-test-renderer": "^17.0.1",
     "sass-loader": "^10.0.5",
     "style-loader": "^2.0.0",
     "webpack": "^5.3.2",
@@ -41,7 +51,20 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "gh-pages": "^3.1.0",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "@jest/globals": "latest"
+  },
+  "jest": {
+    "setupFiles": [
+      "<rootDir>/setupFiles.js"
+    ],
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/enzyme-to-json/serializer"
+    ],
+    "moduleNameMapper": {
+      "^.+\\.(css|scss)$": "identity-obj-proxy"
+    }
   }
 }

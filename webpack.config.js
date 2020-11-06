@@ -8,7 +8,11 @@ module.exports = {
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                 loader: "babel-loader"
+                 loader: "babel-loader",
+                options:{
+                    presets:["@babel/preset-env", "@babel/preset-react"]    // используемые плагины
+                }
+
             },
             {
                 test: /\.(png|jpg|jpeg|gif|ico)$/,
@@ -20,23 +24,22 @@ module.exports = {
                     }
                 }]
             },{
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 use: [ miniCssPlugins.loader, "css-loader", "sass-loader"]
             },
-            {
-                test: /\.jsx?$/, // определяем тип файлов
-                exclude: /(node_modules)/,  // исключаем из обработки папку node_modules
-                loader: "babel-loader",   // определяем загрузчик
-                options:{
-                    presets:["@babel/preset-env", "@babel/preset-react"]    // используемые плагины
-                }
-            }
 
         ]
     },
     resolve: {
-        extensions: ['*', '.js', '.jsx']
+        extensions: ['*', '.js', '.jsx'],
+        modules: [
+            'node_modules',
+            'bower_components',
+            'shared',
+            '/shared/vendor/modules',
+        ],
     },
+
     plugins:[
         new HtmlWebpackPlugin({
             title: "Webpack Ahhgpp",

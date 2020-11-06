@@ -26,16 +26,16 @@ export default class DrawTable extends Component {
     for (let j = 0; j < initialWidth; j++) this.state.tableData.col.push({ j });
   };
   renderTableData() {
-    return this.state.tableData.row.map(indexRow => {
+    return this.state.tableData.row.map((indexRow,i) => {
       return (
         <tr
-          key={indexRow.id}
+          key={i}
           style={{ width: this.props.cellSize, height: this.props.cellSize }}
         >
-          {this.state.tableData.col.map((indexCol, i) => {
+          {this.state.tableData.col.map((indexCol, j) => {
             return (
               <td
-                key={indexCol.id}
+                key={j}
                 style={{
                   width: this.props.cellSize,
                   height: this.props.cellSize

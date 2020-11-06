@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import "./index.scss";
+import "./index.css";
 import DrawTable from "./components/drawTable";
 
 export default class App extends Component {
