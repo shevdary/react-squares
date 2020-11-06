@@ -16,72 +16,72 @@ export default class DrawTable extends Component {
       isVisibleButtonRow: false,
       isVisibleButtonCol: false,
       isLastElementRow: false,
-      isLastElementCol: false,
+      isLastElementCol: false
     };
     this.test(initialWidth, initialHeight);
   }
   test = (initialWidth, initialHeight) => {
     for (let i = 0; i < initialHeight; i++)
-      this.state.tableData.row.push({ i });
-    for (let j = 0; j < initialWidth; j++) this.state.tableData.col.push({ j });
+      this.state.tableData.row.push({ id: i });
+    for (let j = 0; j < initialWidth; j++)
+      this.state.tableData.col.push({ id: j });
   };
   renderTableData() {
-    return this.state.tableData.row.map((indexRow,i) => {
-      return (
-        <tr
-          key={i}
-          style={{ width: this.props.cellSize, height: this.props.cellSize }}
-        >
-          {this.state.tableData.col.map((indexCol, j) => {
-            return (
-              <td
-                key={j}
-                style={{
-                  width: this.props.cellSize,
-                  height: this.props.cellSize
-                }}
-              />
-            );
-          })}
-        </tr>
-      );
-    });
+    return this.state.tableData.row.map((indexRow, key) => (
+      <tr
+        key={indexRow.id}
+        id={indexRow.id}
+        style={{ width: this.props.cellSize, height: this.props.cellSize }}
+      >
+        {this.state.tableData.col.map((indexCol, rowkey) => (
+          <td
+            key={indexCol.id}
+            colIndex={indexCol.id}
+            style={{
+              width: this.props.cellSize,
+              height: this.props.cellSize
+            }}
+          />
+        ))}
+      </tr>
+    ));
   }
-  addedCol = ()=> {
-    let copyTable = this.state.tableData;
-    copyTable.col.push({});
-    this.setState({ tableData: copyTable });
+  addedCol = e => {
+    e.preventDefault();
+    let lastElementId = this.state.tableData.col[
+      this.state.tableData.col.length - 1
+    ].id;
+    this.state.tableData.col.push({ id: lastElementId + 1 });
   };
-  addedRow = ()=> {
-    let copyTable = this.state.tableData;
-    copyTable.row.push({});
-    this.setState({ tableData: copyTable });
+  addedRow = e => {
+    e.preventDefault();
+    let lastElementId = this.state.tableData.row[
+      this.state.tableData.row.length - 1
+    ].id;
+    this.state.tableData.row.push({ id: lastElementId + 1 });
   };
 
-  deleteRow = indexRow => {
+  deleteRow = (e, indexRow) => {
     const findDeleteRow = this.state.tableData;
-    const rowStart = this.state.tableData.row.slice(0, indexRow);
-    const rowEnd = this.state.tableData.row.slice(indexRow + 1);
-    findDeleteRow.row = rowStart.concat(rowEnd);
-    console.log(this.state.tableData.row[1]);
+    findDeleteRow.row = findDeleteRow.row.filter(prod => prod.id !== indexRow);
     this.setState({ tableData: findDeleteRow });
+    this.displayButton();
     this.mouseLeave();
   };
 
   deleteColl = indexColl => {
-    const findDeleteColl = this.state.tableData;
-    const collStart = this.state.tableData.col.slice(0, indexColl);
-    const collEnd = this.state.tableData.col.slice(indexColl + 1);
-    findDeleteColl.col = collStart.concat(collEnd);
-    this.setState({ tableData: findDeleteColl });
+    const findDeleteCol = this.state.tableData;
+    findDeleteCol.col = findDeleteCol.col.filter(prod => prod.id !== indexColl);
+    this.setState({ tableData: findDeleteCol });
     this.displayButton();
     this.mouseLeave();
   };
+
   mouseOverEvent = e => {
     const buttonPositionY = document.querySelector(".remove-row");
     const buttonPositionX = document.querySelector(".remove-coll");
-    const deleteRowIndex = e.target.parentElement.rowIndex;
-    const deleteColIndex = e.target.cellIndex;
+    const deleteRowIndex = Number(e.target.parentNode.getAttribute("id"));
+    const deleteColIndex = Number(e.target.getAttribute("colIndex"));
     buttonPositionY.style.top = e.target.offsetTop + "px";
     buttonPositionX.style.left = e.target.offsetLeft + "px";
     this.setState({ deleteRowIndex, deleteColIndex });
@@ -102,8 +102,8 @@ export default class DrawTable extends Component {
   };
   displayButton = () => {
     this.setState({
-      isLastElementRow: this.state.tableData.row[1] ? true : false,
-      isLastElementCol: this.state.tableData.col[1] ? true : false
+      isLastElementRow: this.state.tableData.row.length > 1 ? true : false,
+      isLastElementCol: this.state.tableData.col.length > 1 ? true : false
     });
   };
   render() {
@@ -143,7 +143,7 @@ export default class DrawTable extends Component {
         </button>
         <button
           className={`button-rm remove-row ${hideRow}  ${displayBtnRow}`}
-          onClick={e => this.deleteRow(deleteRowIndex)}
+          onClick={e => this.deleteRow(e, deleteRowIndex)}
           onMouseEnter={this.mouseEnter}
         >
           -
