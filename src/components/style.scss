@@ -5,9 +5,7 @@
   margin: 60px;
 
   td {
-    width: 50px;
     background-color: #48aae6;
-    height: 50px;
   }
 
   button {
@@ -52,16 +50,20 @@
     right: 100%;
     top: 0;
   }
-  .visible{
+
+  .visible {
     visibility: visible;
   }
-  .hidden{
+
+  .hidden {
     visibility: hidden;
   }
-  .block{
+
+  .block {
     display: block;
   }
-  .none{
+
+  .none {
     display: none;
   }
 }
