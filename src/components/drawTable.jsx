@@ -16,7 +16,7 @@ export default class DrawTable extends Component {
       isVisibleButtonRow: false,
       isVisibleButtonCol: false,
       isLastElementRow: false,
-      isLastElementCol: false
+      isLastElementCol: false,
     };
     this.test(initialWidth, initialHeight);
   }
@@ -47,13 +47,11 @@ export default class DrawTable extends Component {
         </tr>
     );
   }
-  addedCol = e => {
-    e.preventDefault();
+  addedCol = () => {
     let lastElementId=this.state.tableData.col[this.state.tableData.col.length-1].id;
     this.state.tableData.col.push({id:lastElementId+1});
   };
-  addedRow = e => {
-    e.preventDefault();
+  addedRow = () => {
     let lastElementId=this.state.tableData.row[this.state.tableData.row.length-1].id;
     this.state.tableData.row.push({id:lastElementId+1});
   };

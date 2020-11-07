@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import DrawTable from "./drawTable";
-import { describe } from "@jest/globals";
-
+import {beforeEach, describe, expect, it, jest} from "@jest/globals";
 describe("should render table", () => {
   let component;
-  let instanse;
+  let instance;
   beforeEach(() => {
     component = shallow(
       <DrawTable initialWidth={4} initialHeight={4} cellSize={50} />
     );
-    instanse = component.instance();
+    instance = component.instance();
   });
 
   it("should render table with props ", () => {
@@ -18,31 +17,49 @@ describe("should render table", () => {
     expect(row.length).toBe(4);
     expect(col.length).toBe(16);
   });
-
-  describe("button click events", () => {
-    it("button should  add new row in table", () => {
-      const btn = component.find(".add-row");
-      btn.simulate("click");
+  describe("button click events ", () => {
+    it("the button should add one  row ", () => {
+      component.find('.add-row').simulate('click');
       expect(component.state().tableData.row.length).toBe(5);
     });
 
-    it("button should  add new coll in table", () => {
-      const mockCall = jest.fn();
-      const btn = component.find(".add-col");
-      btn.simulate("click");
+    it("the button should add one  column ", () => {
+      component.find('.add-coll').simulate('click');
       expect(component.state().tableData.col.length).toBe(5);
     });
 
-    it("button should  add new coll in table", () => {
-      const btn = component.find(".remove-row");
-      btn.simulate("click");
-      expect(component.state().tableData.row.length).toBe(5);
+    it("the button should delete one column ", () => {
+      component.find('.remove-coll').simulate('click');
+      expect(component.state().tableData.col.length).toBe(4);
     });
 
-    it("button should  add new coll in table", () => {
-      const btn = component.find(".remove-coll");
-      btn.simulate("click");
-      expect(component.state().tableData.col.length).toBe(5);
+    it("the button should delete one row  and column by index   ", () => {
+      instance.deleteRow(2);
+      instance.deleteColl(1);
+
+      expect(component.state().tableData.row.length).toBe(3);
+      expect(component.state().tableData.row.forEach(itemElement=>itemElement[2])).toBe(undefined);
+
+      expect(component.state().tableData.col.length).toBe(3);
+      expect(component.state().tableData.col.forEach(itemElement=>itemElement[1])).toBe(undefined);
     });
   });
+
+  describe("button click events on last element  ", () => {
+    const componentLast = shallow(
+        <DrawTable initialWidth={1} initialHeight={1} cellSize={50} />
+    );
+
+    it("the button should delete one row ", () => {
+      expect(componentLast.state().tableData.row.length).toBe(1);
+      componentLast.find('.remove-row').simulate('click');
+      expect(componentLast.state().tableData.row.length).toBe(1);
+    });
+
+    it("the button should delete one coll ", () => {
+      expect(componentLast.state().tableData.col.length).toBe(1);
+      componentLast.find('.remove-coll').simulate('click');
+      expect(componentLast.state().tableData.col.length).toBe(1);
+    });
+  })
 });
