@@ -18,22 +18,22 @@ describe("should render table", () => {
     expect(col.length).toBe(16);
   });
   describe("button click events ", () => {
-    it("the button should add one  row ", () => {
+    it("add one  row ", () => {
       component.find('.add-row').simulate('click');
       expect(component.state().tableData.row.length).toBe(5);
     });
 
-    it("the button should add one  column ", () => {
+    it("add one  column ", () => {
       component.find('.add-coll').simulate('click');
       expect(component.state().tableData.col.length).toBe(5);
     });
 
-    it("the button should delete one column ", () => {
+    it("delete one column ", () => {
       component.find('.remove-coll').simulate('click');
       expect(component.state().tableData.col.length).toBe(4);
     });
 
-    it("the button should delete one row  and column by index   ", () => {
+    it("delete one row  and column by index   ", () => {
       instance.deleteRow(2);
       instance.deleteColl(1);
 
@@ -45,18 +45,18 @@ describe("should render table", () => {
     });
   });
 
-  describe("button click events on last element  ", () => {
+  describe("function delete last element ", () => {
     const componentLast = shallow(
         <DrawTable initialWidth={1} initialHeight={1} cellSize={50} />
     );
 
-    it("the button should delete one row ", () => {
+    it("delete last row ", () => {
       expect(componentLast.state().tableData.row.length).toBe(1);
       componentLast.find('.remove-row').simulate('click');
       expect(componentLast.state().tableData.row.length).toBe(1);
     });
 
-    it("the button should delete one coll ", () => {
+    it("delete last coll ", () => {
       expect(componentLast.state().tableData.col.length).toBe(1);
       componentLast.find('.remove-coll').simulate('click');
       expect(componentLast.state().tableData.col.length).toBe(1);
