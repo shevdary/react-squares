@@ -1,6 +1,5 @@
 import React, { useState, Component } from "react";
 import "./style.scss";
-
 export default class DrawTable extends Component {
   constructor(props) {
     super(props);
@@ -10,61 +9,62 @@ export default class DrawTable extends Component {
         col: [],
         row: []
       },
-
       deleteColIndex: null,
       deleteRowIndex: null,
-      isVisibleButtonRow: false,
-      isVisibleButtonCol: false,
+      isMouseOverTable: false,
       isLastElementRow: false,
       isLastElementCol: false
     };
-    this.test(initialWidth, initialHeight);
+    this.lastRowElement = false;
+    this.lastRowElement = false;
+    this.drawTable(initialWidth, initialHeight);
   }
-  test = (initialWidth, initialHeight) => {
+  drawTable = (initialWidth, initialHeight) => {
     for (let i = 0; i < initialHeight; i++)
       this.state.tableData.row.push({ id: i });
     for (let j = 0; j < initialWidth; j++)
       this.state.tableData.col.push({ id: j });
   };
   renderTableData() {
+    const { cellSize } = this.props;
     return this.state.tableData.row.map((indexRow, key) => (
-      <tr
-        key={indexRow.id}
-        rowIndex={indexRow.id}
-        style={{ width: this.props.cellSize, height: this.props.cellSize }}
-      >
-        {this.state.tableData.col.map((indexCol, rowkey) => (
-          <td
-            key={indexCol.id}
-            colIndex={indexCol.id}
-            style={{
-              width: this.props.cellSize,
-              height: this.props.cellSize
-            }}
-          />
-        ))}
-      </tr>
+        <tr
+            key={indexRow.id}
+            rowIndex={indexRow.id}
+            style={{ width: cellSize, height: cellSize }}
+        >
+          {this.state.tableData.col.map((indexCol, rowkey) => (
+              <td
+                  key={indexCol.id}
+                  colIndex={indexCol.id}
+                  style={{
+                    width: cellSize,
+                    height: cellSize
+                  }}
+              />
+          ))}
+        </tr>
     ));
   }
   addedCol = () => {
-    let lastElementId = this.state.tableData.col[
-      this.state.tableData.col.length - 1
-    ].id;
-    this.state.tableData.col.push({ id: lastElementId + 1 });
+    const { tableData } = this.state;
+    const lastElementId = tableData.col[tableData.col.length - 1].id;
+    tableData.col = [...tableData.col, { id: lastElementId + 1 }];
+    this.setState({ tableData });
   };
   addedRow = () => {
-    let lastElementId = this.state.tableData.row[
-      this.state.tableData.row.length - 1
-    ].id;
-    this.state.tableData.row.push({ id: lastElementId + 1 });
+    const { tableData } = this.state;
+    const lastElementId = tableData.row[tableData.row.length - 1].id;
+    tableData.row = [...tableData.row, { id: lastElementId + 1 }];
+    this.setState({ tableData });
   };
 
   deleteRow = indexRow => {
     const findDeleteRow = this.state.tableData;
     findDeleteRow.row = findDeleteRow.row.filter(prod => prod.id !== indexRow);
     this.setState({ tableData: findDeleteRow });
-    this.displayButton();
     this.mouseLeave();
+    this.displayButton();
   };
 
   deleteColl = indexColl => {
@@ -72,7 +72,6 @@ export default class DrawTable extends Component {
     findDeleteCol.col = findDeleteCol.col.filter(prod => prod.id !== indexColl);
     this.setState({ tableData: findDeleteCol });
     this.displayButton();
-    this.mouseLeave();
   };
 
   mouseOverEvent = e => {
@@ -88,14 +87,12 @@ export default class DrawTable extends Component {
   };
   mouseLeave = () => {
     this.setState({
-      isVisibleButtonRow: false,
-      isVisibleButtonCol: false
+      isMouseOverTable: false
     });
   };
   mouseEnter = () => {
     this.setState({
-      isVisibleButtonRow: true,
-      isVisibleButtonCol: true
+      isMouseOverTable: true
     });
   };
   displayButton = () => {
@@ -108,47 +105,56 @@ export default class DrawTable extends Component {
     const {
       deleteRowIndex,
       deleteColIndex,
-      isVisibleButtonRow,
-      isVisibleButtonCol,
+      isMouseOverTable,
       isLastElementRow,
       isLastElementCol
     } = this.state;
-    const hideRow = isVisibleButtonRow ? "visible" : "hidden";
-    const hideCol = isVisibleButtonCol ? "visible" : "hidden";
+    const { cellSize } = this.props;
+    const hideButton = isMouseOverTable ? "visible" : "hidden";
     const displayBtnRow = isLastElementRow ? "block" : "none";
     const displayBtnCol = isLastElementCol ? "block" : "none";
     return (
-      <div className="squares-table" onMouseLeave={this.mouseLeave}>
-        <table onMouseEnter={this.mouseEnter}>
-          <tbody onMouseMove={this.mouseOverEvent}>
+        <div className="squares-table">
+          <table onMouseEnter={this.mouseEnter} onMouseLeave={this.mouseLeave}>
+            <tbody onMouseMove={this.mouseOverEvent}>
             {this.renderTableData()}
-          </tbody>
-        </table>
-        <button className="button-add add-coll" onClick={e => this.addedCol(e)}>
-          +
-        </button>
-        <button className="button-add add-row" onClick={e => this.addedRow(e)}>
-          +
-        </button>
-        <button
-          className={`button-rm remove-coll ${hideCol} ${displayBtnCol}`}
-          onClick={() => {
-            this.deleteColl(deleteColIndex);
-          }}
-          onMouseEnter={this.mouseEnter}
-          disabled={!isLastElementCol}
-        >
-          -
-        </button>
-        <button
-          className={`button-rm remove-row ${hideRow}  ${displayBtnRow}`}
-          onClick={() => this.deleteRow(deleteRowIndex)}
-          onMouseEnter={this.mouseEnter}
-          disabled={!isLastElementRow}
-        >
-          -
-        </button>
-      </div>
+            </tbody>
+          </table>
+          <button
+              style={{ width: cellSize, height: cellSize }}
+              className="button-add add-coll"
+              onClick={this.addedCol}
+          >
+            +
+          </button>
+          <button
+              style={{ width: cellSize, height: cellSize }}
+              className="button-add add-row"
+              onClick={this.addedRow}
+          >
+            +
+          </button>
+          <button
+              className={`button-rm remove-coll ${hideButton}`}
+              style={{ width: cellSize, height: cellSize }}
+              onClick={() => {
+                this.deleteColl(deleteColIndex);
+              }}
+              onMouseEnter={this.mouseEnter}
+              disabled={!isLastElementCol}
+          >
+            -
+          </button>
+          <button
+              style={{ width: cellSize, height: cellSize }}
+              className={`button-rm remove-row ${hideButton} `}
+              onClick={() => this.deleteRow(deleteRowIndex)}
+              onMouseEnter={this.mouseEnter}
+              disabled={!isLastElementRow}
+          >
+            -
+          </button>
+        </div>
     );
   }
 }
