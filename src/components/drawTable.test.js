@@ -14,34 +14,34 @@ describe("should render table", () => {
   it("should render table with props ", () => {
     const row = component.find("tr");
     const col = component.find("td");
-    expect(row.length).toBe(4);
-    expect(col.length).toBe(16);
+    expect(row).toHaveLength(4);
+    expect(col).toHaveLength(16);
   });
   describe("button click events ", () => {
     it("add one  row ", () => {
       component.find('.add-row').simulate('click');
-      expect(component.state().tableData.row.length).toBe(5);
+      expect(component.state().tableData.row).toHaveLength(5);
     });
 
     it("add one  column ", () => {
       component.find('.add-coll').simulate('click');
-      expect(component.state().tableData.col.length).toBe(5);
+      expect(component.state().tableData.col).toHaveLength(5);
     });
 
     it("delete one column ", () => {
       component.find('.remove-coll').simulate('click');
-      expect(component.state().tableData.col.length).toBe(4);
+      expect(component.state().tableData.col).toHaveLength(4);
     });
 
     it("delete one row  and column by index   ", () => {
       instance.deleteRow(2);
       instance.deleteColl(1);
 
-      expect(component.state().tableData.row.length).toBe(3);
-      expect(component.state().tableData.row.forEach(itemElement=>itemElement[2])).toBe(undefined);
+      expect(component.state().tableData.row).toHaveLength(3);
+      expect(component.state().tableData.row.forEach(itemElement=>itemElement[2])).toBeUndefined();
 
-      expect(component.state().tableData.col.length).toBe(3);
-      expect(component.state().tableData.col.forEach(itemElement=>itemElement[1])).toBe(undefined);
+      expect(component.state().tableData.col).toHaveLength(3);
+      expect(component.state().tableData.col.forEach(itemElement=>itemElement[1])).toBeUndefined();
     });
   });
 
@@ -51,15 +51,15 @@ describe("should render table", () => {
     );
 
     it("delete last row ", () => {
-      expect(componentLast.state().tableData.row.length).toBe(1);
+      expect(componentLast.state().tableData.row).toHaveLength(1);
       componentLast.find('.remove-row').simulate('click');
-      expect(componentLast.state().tableData.row.length).toBe(1);
+      expect(componentLast.state().tableData.row).toHaveLength(1);
     });
 
     it("delete last coll ", () => {
-      expect(componentLast.state().tableData.col.length).toBe(1);
+      expect(componentLast.state().tableData.col).toHaveLength(1);
       componentLast.find('.remove-coll').simulate('click');
-      expect(componentLast.state().tableData.col.length).toBe(1);
+      expect(componentLast.state().tableData.col).toHaveLength(1);
     });
   })
 });
