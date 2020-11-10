@@ -1,23 +1,28 @@
+
 .squares-table {
   position: relative;
   display: inline-block;
-  border: 1px solid #48aae6;
-  margin: 60px;
+  margin: 55px;}
 
-  td {
-    background-color: #48aae6;
+  .squares-table table td {
+    background-color: #48AAE6;
+  }
+
+  .squares-table table {
+    border: 1px solid #48AAE6;
+  }
+
+  .table-block {
+    padding: 1px;
   }
 
   button {
-    outline: none;
-    margin: 2px;
+    cursor: pointer;
     color: #ffffff;
-    width: 50px;
-    height: 50px;
     font-size: 25px;
     position: absolute;
     border: none;
-    transition: 0.25s;
+    transition: left .25s, top .25s;
   }
 
   button:hover {
@@ -27,7 +32,6 @@
 
   .button-rm,
   .button-rm {
-    visibility: hidden;
     background-color: #b20000;
   }
 
@@ -39,16 +43,27 @@
   .add-coll {
     left: 100%;
     top: 0;
+    margin-top: 4px;
+  }
+
+  .add-row {
+    margin-left: 4px;
   }
 
   .remove-coll {
     bottom: 100%;
     left: 0;
+    margin-left: 2px;
   }
 
   .remove-row {
     right: 100%;
     top: 0;
+    margin-top: 2px;
+  }
+
+  .table-block {
+    padding: 1px;
   }
 
   .visible {
@@ -66,4 +81,3 @@
   .none {
     display: none;
   }
-}
