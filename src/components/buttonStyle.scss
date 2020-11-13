@@ -1,0 +1,44 @@
+.left {
+  margin-top: 3px;
+  right: 100%;
+  top: 0;
+}
+
+.right {
+  margin-top: 3px;
+  left: 100%;
+  top: 0;
+}
+
+.top {
+  margin-left: 3px;
+  bottom: 100%;
+  left: 0;
+}
+
+.bottom {
+  margin-left: 3px;
+  top: 100%;
+}
+
+.button-rm {
+  background-color: #b20000;
+}
+
+.button-add {
+  background-color: #f3a500;
+}
+
+button {
+  cursor: pointer;
+  color: #ffffff;
+  font-size: 25px;
+  position: absolute;
+  border: none;
+  transition: left .25s, top .25s;
+}
+
+button:hover {
+  transition: opacity 0.5s;
+  opacity: 65%;
+}

@@ -1,11 +1,29 @@
-import React, { Component } from "react";
-import "./style.scss";
-
-export const DrawButton = ({ text, click, className }) => {
+import React, { Component, PureComponent } from "react";
+import "./buttonStyle.scss";
+const Button = ({
+  type,
+  size,
+  location,
+  className,
+  click,
+  positionX,
+  positionY
+}) => {
+  const styleButton = {
+    width: `${size}px`,
+    height: `${size}px`,
+    top: `${positionY}px`,
+    left: `${positionX}px`
+  };
   return (
-    <button className={className} onClick={() => click()}>
-      {text}
+    <button
+      style={styleButton}
+      className={`${location} ${className} `}
+      onClick={click}
+    >
+      {type === "plus" ? "+" : "-"}
     </button>
   );
 };
 
+export default Button;
