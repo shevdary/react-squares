@@ -1,7 +1,7 @@
 import React from "react";
-import SuperTable from "./drawTable";
+import SuperTable from "../drawTable";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import Button from "./drawButton";
+import Button from "../button/drawButton";
 
 describe("should render table", () => {
   let component, componentRemove;

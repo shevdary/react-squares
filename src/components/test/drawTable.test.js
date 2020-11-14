@@ -1,5 +1,5 @@
 import React from "react";
-import SuperTable from "./drawTable";
+import SuperTable from "../drawTable";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 describe("should render table", () => {
   let component;

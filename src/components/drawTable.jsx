@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style.scss";
-import Button from "./drawButton";
+import Button from "./button/drawButton";
 
 export default class SuperTable extends Component {
   constructor(props) {
