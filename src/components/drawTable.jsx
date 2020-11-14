@@ -1,4 +1,4 @@
-import React, { useState, Component } from "react";
+import React, { Component } from "react";
 import "./style.scss";
 import Button from "./drawButton";
 
@@ -13,7 +13,7 @@ export default class SuperTable extends Component {
       row: [],
       colIndex: null,
       rowIndex: null,
-      click: 0
+      isMouseOverTable: false
     };
     this.drawTable(initialWidth, initialHeight);
   }
@@ -56,7 +56,7 @@ export default class SuperTable extends Component {
   };
 
   mouseMove = e => {
-    const { parentNode, offsetTop, offsetLeft, buttonPositionY } = e.target;
+    const { parentNode, offsetTop, offsetLeft } = e.target;
     const rowIndex = Number(parentNode.getAttribute("rowIndex"));
     const colIndex = Number(e.target.getAttribute("colIndex"));
     this.setState({
@@ -158,7 +158,7 @@ export default class SuperTable extends Component {
           type="minus"
           size={cellSize}
           location="top"
-          className={`button-rm ${hideButton} ${displayBtnCol}`}
+          className={`button-rm rm-col ${hideButton} ${displayBtnCol}`}
           click={this.deleteCol}
           positionX={buttonPositionX}
         />
@@ -166,7 +166,7 @@ export default class SuperTable extends Component {
           type="minus"
           size={cellSize}
           location="left"
-          className={`button-rm ${hideButton} ${displayBtnRow}`}
+          className={`button-rm rm-row ${hideButton} ${displayBtnRow}`}
           click={this.deleteRow}
           positionY={buttonPositionY}
         />
