@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import DrawTable from "./drawTable";
-import {beforeEach, describe, expect, it, jest} from "@jest/globals";
+import SuperTable from "./drawTable";
+import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 describe("should render table", () => {
   let component;
   let instance;
   beforeEach(() => {
     component = shallow(
-      <DrawTable initialWidth={4} initialHeight={4} cellSize={50} />
+      <SuperTable initialWidth={4} initialHeight={4} cellSize={50} />
     );
     instance = component.instance();
   });
@@ -17,49 +17,39 @@ describe("should render table", () => {
     expect(row).toHaveLength(4);
     expect(col).toHaveLength(16);
   });
-  describe("button click events ", () => {
-    it("add one  row ", () => {
-      component.find('.add-row').simulate('click');
-      expect(component.state().tableData.row).toHaveLength(5);
+  describe(" button click event", () => {
+    it("should add rows and columns", () => {
+      instance.addCol();
+      expect(component.state().col).toHaveLength(5);
+      instance.addRow();
+      expect(component.state().row).toHaveLength(5);
     });
 
-    it("add one  column ", () => {
-      component.find('.add-coll').simulate('click');
-      expect(component.state().tableData.col).toHaveLength(5);
+    it("should delete row", () => {
+      component.setState({ rowIndex: 1 });
+      instance.deleteRow();
+      expect(component.state().row).toHaveLength(3);
+      expect(
+        component.state().row.forEach(itemElement => itemElement[2])
+      ).toBeUndefined();
     });
-
-    it("delete one column ", () => {
-      component.find('.remove-coll').simulate('click');
-      expect(component.state().tableData.col).toHaveLength(4);
+    it("should delete col", () => {
+      component.setState({ colIndex: 2 });
+      instance.deleteCol();
+      expect(component.state().col).toHaveLength(3);
+      expect(
+        component.state().col.forEach(itemElement => itemElement[2])
+      ).toBeUndefined();
     });
-
-    it("delete one row  and column by index   ", () => {
-      instance.deleteRow(2);
-      instance.deleteColl(1);
-
-      expect(component.state().tableData.row).toHaveLength(3);
-      expect(component.state().tableData.row.forEach(itemElement=>itemElement[2])).toBeUndefined();
-
-      expect(component.state().tableData.col).toHaveLength(3);
-      expect(component.state().tableData.col.forEach(itemElement=>itemElement[1])).toBeUndefined();
+    it("shouldn't delete last row and col", () => {
+      component = shallow(
+        <SuperTable initialWidth={1} initialHeight={1} cellSize={50} />
+      );
+      component.setState({ colIndex: 0 ,rowIndex: 0});
+      instance.deleteCol();
+      instance.deleteRow();
+      expect(component.state().col).toHaveLength(1);
+      expect(component.state().row).toHaveLength(1);
     });
   });
-
-  describe("function delete last element ", () => {
-    const componentLast = shallow(
-        <DrawTable initialWidth={1} initialHeight={1} cellSize={50} />
-    );
-
-    it("delete last row ", () => {
-      expect(componentLast.state().tableData.row).toHaveLength(1);
-      componentLast.find('.remove-row').simulate('click');
-      expect(componentLast.state().tableData.row).toHaveLength(1);
-    });
-
-    it("delete last coll ", () => {
-      expect(componentLast.state().tableData.col).toHaveLength(1);
-      componentLast.find('.remove-coll').simulate('click');
-      expect(componentLast.state().tableData.col).toHaveLength(1);
-    });
-  })
 });

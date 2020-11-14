@@ -13,7 +13,7 @@ export default class SuperTable extends Component {
       row: [],
       colIndex: null,
       rowIndex: null,
-      isMouseOverTable: false
+      click: 0
     };
     this.drawTable(initialWidth, initialHeight);
   }
@@ -56,7 +56,7 @@ export default class SuperTable extends Component {
   };
 
   mouseMove = e => {
-    const { parentNode, offsetTop, offsetLeft } = e.target;
+    const { parentNode, offsetTop, offsetLeft, buttonPositionY } = e.target;
     const rowIndex = Number(parentNode.getAttribute("rowIndex"));
     const colIndex = Number(e.target.getAttribute("colIndex"));
     this.setState({
@@ -72,13 +72,12 @@ export default class SuperTable extends Component {
       tagName === "TABLE" ||
       tagName === "TD" ||
       className.includes("button-rm") ||
-      className.includes("deleted-button")
+      className.includes("table-block")
     ) {
       this.setState({ isMouseOverTable: true });
     }
     this.displayButton(e);
   };
-
   mouseOut = e => {
     const { nodeName } = e.target;
     if (nodeName !== "TD" || nodeName !== "BUTTON") {
@@ -141,19 +140,18 @@ export default class SuperTable extends Component {
             </tbody>
           </table>
         </div>
-
         <Button
           type="plus"
           size={cellSize}
           location={"bottom"}
-          className="button-add"
+          className="button-add add-row"
           click={this.addRow}
         />
         <Button
           type="plus"
           size={cellSize}
           location={"right"}
-          className="button-add"
+          className="button-add add-col"
           click={this.addCol}
         />
         <Button
