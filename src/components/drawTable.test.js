@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import SuperTable from "./drawTable";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
 describe("should render table", () => {
@@ -45,7 +45,7 @@ describe("should render table", () => {
       component = shallow(
         <SuperTable initialWidth={1} initialHeight={1} cellSize={50} />
       );
-      component.setState({ colIndex: 0 ,rowIndex: 0});
+      component.setState({ colIndex: 0, rowIndex: 0 });
       instance.deleteCol();
       instance.deleteRow();
       expect(component.state().col).toHaveLength(1);
