@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "https://shevdary.github.io/react-squares/",
   "main": "index.js",
+  "prettier": "prettier-config",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack ",

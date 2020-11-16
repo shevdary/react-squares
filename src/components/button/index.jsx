@@ -1,5 +1,6 @@
 import React from "react";
-import "./buttonStyle.scss";
+import "./style.scss";
+
 const Button = ({
   type,
   size,
@@ -24,6 +25,10 @@ const Button = ({
       {type === "plus" ? "+" : "-"}
     </button>
   );
+};
+
+Button.defaultProps = {
+  size: 50
 };
 
 export default Button;

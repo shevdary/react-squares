@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./style.scss";
-import Button from "./button/drawButton";
+import Button from "../button";
 
 export default class SuperTable extends Component {
   constructor(props) {
@@ -25,30 +25,26 @@ export default class SuperTable extends Component {
   };
 
   addCol = () => {
-    let { col } = this.state;
+    const { col } = this.state;
     const lastElementId = col[col.length - 1].id;
-    col = [...col, { id: lastElementId + 1 }];
-    this.setState({ col });
+    this.setState({ col: [...col, { id: lastElementId + 1 }] });
   };
 
   addRow = () => {
-    let { row } = this.state;
+    const { row } = this.state;
     const lastElementId = row[row.length - 1].id;
-    row = [...row, { id: lastElementId + 1 }];
-    this.setState({ row });
+    this.setState({ row: [...row, { id: lastElementId + 1 }] });
   };
 
   deleteRow = () => {
-    let { rowIndex, row } = this.state;
-    row = row.filter(prod => prod.id !== rowIndex);
-    this.setState({ row });
+    const { rowIndex, row } = this.state;
+    this.setState({ row: row.filter(prod => prod.id !== rowIndex) });
     this.showButton();
   };
 
   deleteCol = () => {
-    let { colIndex, col } = this.state;
-    col = col.filter(prod => prod.id !== colIndex);
-    this.setState({ col });
+    const { colIndex, col } = this.state;
+    this.setState({ col: col.filter(prod => prod.id !== colIndex) });
     this.showButton();
   };
   showButton = () => {
@@ -76,7 +72,6 @@ export default class SuperTable extends Component {
     ) {
       this.setState({ isMouseOverTable: true });
     }
-    this.displayButton(e);
   };
   mouseOut = e => {
     const { nodeName } = e.target;
@@ -87,26 +82,9 @@ export default class SuperTable extends Component {
     }
   };
 
-  displayButton = e => {
-    const { parentNode, nodeName, children } = e.target;
-    if (nodeName === "TD") {
-      this.setState({
-        isLastElementCol: parentNode.children.length > 1,
-        isLastElementRow: parentNode.parentNode.children.length > 1
-      });
-    }
-    if (nodeName === "TABLE") {
-      this.setState({
-        isLastElementCol: children[0].children[0].children.length > 1,
-        isLastElementRow: children[0].children.length > 1
-      });
-    }
-  };
-
   render() {
-    const { row, col, isMouseOverTable } = this.state;
-    const { buttonPositionY, buttonPositionX } = this;
     const { cellSize } = this.props;
+    const { row, col, isMouseOverTable } = this.state;
     const hideButton = isMouseOverTable ? "visible" : "hidden";
     const displayBtnRow = row[1] ? "block" : "none";
     const displayBtnCol = col[1] ? "block" : "none";
@@ -143,14 +121,14 @@ export default class SuperTable extends Component {
         <Button
           type="plus"
           size={cellSize}
-          location={"bottom"}
+          location="bottom"
           className="button-add add-row"
           click={this.addRow}
         />
         <Button
           type="plus"
           size={cellSize}
-          location={"right"}
+          location="right"
           className="button-add add-col"
           click={this.addCol}
         />
@@ -160,7 +138,7 @@ export default class SuperTable extends Component {
           location="top"
           className={`button-rm rm-col ${hideButton} ${displayBtnCol}`}
           click={this.deleteCol}
-          positionX={buttonPositionX}
+          positionX={this.buttonPositionX}
         />
         <Button
           type="minus"
@@ -168,9 +146,14 @@ export default class SuperTable extends Component {
           location="left"
           className={`button-rm rm-row ${hideButton} ${displayBtnRow}`}
           click={this.deleteRow}
-          positionY={buttonPositionY}
+          positionY={this.buttonPositionY}
         />
       </div>
     );
   }
 }
+Button.defaultProps={
+  cellSize:50,
+  initialWidth:4,
+  initialHeight:4
+};
