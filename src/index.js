@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import SuperTable from "./components/superTable";
+import SuperTable from './components/SuperTable/SuperTable';
 
 export default class App extends Component {
   render() {

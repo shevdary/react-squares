@@ -1,7 +1,7 @@
 import React from "react";
-import SuperTable from "./index";
+import SuperTable from "./SuperTable";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import Button from "../button";
+import Button from '../Button/Button';
 
 describe("render correctly table component", () => {
   let component;
