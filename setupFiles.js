@@ -8,7 +8,7 @@ global.shallow = shallow;
 global.render = render;
 global.mount = mount;
 global.toJson= toJson;
-// Обрушим тест при любой ошибке
+
 console.error = message => {
     throw new Error(message);
 };

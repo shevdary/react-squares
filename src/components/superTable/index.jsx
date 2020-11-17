@@ -97,24 +97,24 @@ export default class SuperTable extends Component {
         <div className={"table-block"}>
           <table>
             <tbody onMouseMove={this.mouseMove}>
-              {row.map(indexRow => (
-                <tr
-                  key={indexRow.id}
-                  rowindex={indexRow.id}
-                  style={{ width: cellSize, height: cellSize }}
-                >
-                  {col.map(indexCol => (
-                    <td
-                      key={indexCol.id}
-                      colindex={indexCol.id}
-                      style={{
-                        width: cellSize,
-                        height: cellSize
-                      }}
-                    />
-                  ))}
-                </tr>
-              ))}
+            {row.map(indexRow => (
+              <tr
+                key={indexRow.id}
+                rowindex={indexRow.id}
+                style={{ width: cellSize, height: cellSize }}
+              >
+                {col.map(indexCol => (
+                  <td
+                    key={indexCol.id}
+                    colindex={indexCol.id}
+                    style={{
+                      width: cellSize,
+                      height: cellSize
+                    }}
+                  />
+                ))}
+              </tr>
+            ))}
             </tbody>
           </table>
         </div>
@@ -139,6 +139,7 @@ export default class SuperTable extends Component {
           className={`button-rm rm-col ${hideButton} ${displayBtnCol}`}
           click={this.deleteCol}
           positionX={this.buttonPositionX}
+          disabled={!col[1]}
         />
         <Button
           type="minus"
@@ -147,12 +148,14 @@ export default class SuperTable extends Component {
           className={`button-rm rm-row ${hideButton} ${displayBtnRow}`}
           click={this.deleteRow}
           positionY={this.buttonPositionY}
+          disabled={!row[1]}
         />
       </div>
     );
   }
 }
-Button.defaultProps={
+
+SuperTable.defaultProps={
   cellSize:50,
   initialWidth:4,
   initialHeight:4

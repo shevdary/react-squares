@@ -1,61 +1,45 @@
 import React from "react";
-import Index from "../superTable/SuperTable";
 import { beforeEach, describe, expect, it, jest } from "@jest/globals";
-import Button from "../button/drawButton";
-import SuperTable from "../superTable";
+import Button from "./index";
 
 describe("should render table", () => {
-  let component, componentRemove;
+  let componentRemove;
   beforeEach(() => {
-    component = shallow(
-      <SuperTable initialWidth={4} initialHeight={4} cellSize={50} />
-    );
     componentRemove = shallow(
       <Button
         type={"minus"}
-        size={50}
         location="top"
         className="button-rm"
         positionX={0}
       />
     );
   });
-  describe(" first render", () => {
-    it(" first render component with props ", () => {
+
+  describe("render buttons with default props", () => {
+    it("should render component with default props ", () => {
       expect(componentRemove.prop("style")).toHaveProperty("height", "50px");
       expect(componentRemove.prop("style")).toHaveProperty("left", "0px");
+      expect(componentRemove.prop("style")).toHaveProperty("width", "50px");
       expect(componentRemove.text()).toEqual("-");
     });
   });
-  describe("button render ", () => {
-    it("should ", () => {
-      component
-        .find(".add-row")
-        .dive()
-        .simulate("click");
-      expect(component.state().row).toHaveLength(5);
 
-      component
-        .find(".add-col")
-        .dive()
-        .simulate("click");
-      expect(component.state().col).toHaveLength(5);
+  describe("render buttons with cell size", () => {
+    const componentWithProps = shallow(
+      <Button
+        type={"minus"}
+        size={90}
+        location="top"
+        className="button-rm"
+        positionX={0}
+      />
+    );
 
-      component.setState({ rowIndex: 1, colIndex: 3 });
-      component
-        .find(".rm-row")
-        .dive()
-        .simulate("click");
-      component
-        .find(".rm-col")
-        .dive()
-        .simulate("click");
-      expect(
-        component.state().row.forEach(itemElement => itemElement[1])
-      ).toBeUndefined();
-      expect(
-        component.state().col.forEach(itemElement => itemElement[3])
-      ).toBeUndefined();
+    it("should render component with size props ", () => {
+      expect(componentWithProps.prop("style")).toHaveProperty("left", "0px");
+      expect(componentWithProps.prop("style")).toHaveProperty("height", "90px");
+      expect(componentWithProps.prop("style")).toHaveProperty("width", "90px");
+      expect(componentWithProps.text()).toEqual("-");
     });
   });
 });

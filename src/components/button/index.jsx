@@ -8,7 +8,8 @@ const Button = ({
   className,
   click,
   positionX,
-  positionY
+  positionY,
+  disabled
 }) => {
   const styleButton = {
     width: `${size}px`,
@@ -21,6 +22,7 @@ const Button = ({
       style={styleButton}
       className={`${location} ${className} `}
       onClick={click}
+      disabled={disabled}
     >
       {type === "plus" ? "+" : "-"}
     </button>
